@@ -1,0 +1,33 @@
+[
+  {
+    "name": "iQOO Z10",
+    "price": 21999,
+    "image": "images/iqooz10.png",
+    "display": "6.6-inch FHD+ AMOLED, 2400x1080 pixels",
+    "build": "Polycarbonate back, IP52 rated",
+    "ram": "8GB LPDDR4X",
+    "storage": "128GB UFS 2.2",
+    "network": "Dual 5G, 12 bands supported",
+    "camera": "50MP Sony IMX sensor",
+    "battery": "7300mAh, 44W fast charging",
+    "processor": "Snapdragon 7s Gen 3, 2.4GHz",
+    "extras": "Stereo speakers, in-display fingerprint",
+    "buyLink": "https://amzn.in/your-affiliate-link"
+  },
+  {
+  "name": "Realme GT 6T",
+  "price": 23999,
+  "image": "images/realmegt6t.png",
+  "display": "6.78-inch 1.5K AMOLED, 2780x1264 pixels",
+  "build": "Glass back, IP65 rating",
+  "ram": "12GB LPDDR5X",
+  "storage": "256GB UFS 3.1",
+  "network": "Dual 5G, 13 bands",
+  "camera": "50MP Sony LYT-600 sensor",
+  "battery": "5500mAh, 120W SuperVOOC",
+  "processor": "Snapdragon 7+ Gen 3, 2.8GHz",
+  "extras": "Dual stereo speakers, X-axis vibration motor",
+  "buyLink": "https://amzn.in/your-affiliate-link"
+}
+
+]

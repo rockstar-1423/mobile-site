@@ -1,68 +1,56 @@
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
   margin: 0;
   padding: 0;
-  background-color: #f2f2f2;
-}
-
-header {
-  background: linear-gradient(to right, #000428, #004e92);
-  padding: 30px 20px;
-  text-align: center;
-  color: white;
 }
 
 h1 {
-  margin: 0;
-  font-size: 2.2rem;
-  letter-spacing: 1px;
-}
-
-#searchBar {
-  margin-top: 15px;
-  padding: 12px;
-  width: 90%;
-  max-width: 400px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  padding: 20px;
+  color: #222;
 }
 
 .card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
   padding: 20px;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .card {
-  background-color: white;
+  background-color: #fff;
   border-radius: 16px;
+  padding: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  margin: 15px;
-  padding: 20px;
-  width: 280px;
-  transition: 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .card:hover {
-  transform: scale(1.02);
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 12px;
 }
 
 .card h3 {
-  margin-top: 0;
+  margin: 12px 0 8px;
+  color: #333;
 }
 
-.price {
-  color: #1c9c4c;
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 12px;
+.card p {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #444;
 }
 
 button {
   background-color: #007bff;
+  color: white;
   border: none;
   color: white;
   padding: 10px 16px;
@@ -73,4 +61,15 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+#searchBox {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 16px;
+  font-size: 16px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
