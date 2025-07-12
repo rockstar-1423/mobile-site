@@ -17,9 +17,19 @@
 </head>
 <body>
   <header>
-    <h1>📱 VS Mobiles</h1>
-    <input type="text" id="searchBar" placeholder="Search for a mobile..." />
-  </header>
+  <h1>📱 VS Mobiles</h1>
+
+  <!-- Navigation -->
+  <div class="navbar">
+    <button onclick="navigateTo('home')">Home</button>
+    <button onclick="navigateTo('upcoming')">Upcoming Mobiles</button>
+  </div>
+
+  <input type="text" id="searchBox" placeholder="Search phones..." />
+</header>
+
+<div id="mobileList" class="card-container"></div>
+
 
   <div class="card-container">
     <div class="card">

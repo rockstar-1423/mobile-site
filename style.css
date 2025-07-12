@@ -86,3 +86,25 @@ button, .buy-btn {
 button:hover, .buy-btn:hover {
   background-color: #0056b3;
 }
+.navbar {
+  margin: 15px 0;
+  text-align: center;
+}
+
+.navbar button {
+  margin: 5px 10px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  background-color: #ffffff;
+  color: #004e92;
+  border: 2px solid #004e92;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar button:hover {
+  background-color: #004e92;
+  color: white;
+}

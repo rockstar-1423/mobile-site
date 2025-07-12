@@ -1,18 +1,19 @@
-let allPhones = []; // Store all phones here globally
+let allPhones = []; // Store all phones globally
 
-fetch('mobiles.json')
-  .then(res => res.json())
-  .then(data => {
-    // Sort by price (lowest to highest)
-    data.sort((a, b) => a.price - b.price);
-
-    allPhones = data;
-    displayPhones(data);
-  });
+function fetchMobiles(jsonPath) {
+  fetch(jsonPath)
+    .then(res => res.json())
+    .then(data => {
+      // Sort by price (lowest to highest)
+      data.sort((a, b) => a.price - b.price);
+      allPhones = data;
+      displayPhones(data);
+    });
+}
 
 function displayPhones(phones) {
   const container = document.getElementById('mobileList');
-  container.innerHTML = ''; // Clear previous results
+  container.innerHTML = '';
 
   phones.forEach(phone => {
     const card = document.createElement('div');
@@ -37,13 +38,25 @@ function displayPhones(phones) {
   });
 }
 
-// 🔍 Search Filter
+// 🔍 Search filter
 document.getElementById('searchBox').addEventListener('input', function () {
   const query = this.value.toLowerCase();
-
   const filtered = allPhones.filter(phone =>
     phone.name.toLowerCase().includes(query)
   );
-
   displayPhones(filtered);
+});
+
+// Navigation handler
+function navigateTo(section) {
+  if (section === 'home') {
+    fetchMobiles('mobiles.json');
+  } else if (section === 'upcoming') {
+    fetchMobiles('upcoming.json');
+  }
+}
+
+// Load home phones on start
+document.addEventListener('DOMContentLoaded', () => {
+  fetchMobiles('mobiles.json');
 });
