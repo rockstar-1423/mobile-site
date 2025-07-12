@@ -12,22 +12,21 @@
     "battery": "7300mAh, 44W fast charging",
     "processor": "Snapdragon 7s Gen 3, 2.4GHz",
     "extras": "Stereo speakers, in-display fingerprint",
-    "buyLink": "https://www.amazon.in/dp/B0CQI10ZIQ?tag=vsmobiles1432-21"
+    "buyLink": "https://www.amazon.in/dp/B0F2HBYZ8B?tag=vsmobiles1432-21"
   },
   {
-  "name": "Realme GT 6T",
-  "price": 23999,
-  "image": "images/realmegt6t.png",
-  "display": "6.78-inch 1.5K AMOLED, 2780x1264 pixels",
-  "build": "Glass back, IP65 rating",
-  "ram": "12GB LPDDR5X",
-  "storage": "256GB UFS 3.1",
-  "network": "Dual 5G, 13 bands",
-  "camera": "50MP Sony LYT-600 sensor",
-  "battery": "5500mAh, 120W SuperVOOC",
-  "processor": "Snapdragon 7+ Gen 3, 2.8GHz",
-  "extras": "Dual stereo speakers, X-axis vibration motor",
-  "buyLink": "https://www.amazon.in/dp/B0D1K73Z4F?tag=vsmobiles1432-21"
-}
-
+    "name": "Realme GT 6T",
+    "price": 23999,
+    "image": "images/realmegt6t.png",
+    "display": "6.78-inch 1.5K AMOLED, 2780x1264 pixels",
+    "build": "Glass back, IP65 rating",
+    "ram": "12GB LPDDR5X",
+    "storage": "256GB UFS 3.1",
+    "network": "Dual 5G, 13 bands",
+    "camera": "50MP Sony LYT-600 sensor",
+    "battery": "5500mAh, 120W SuperVOOC",
+    "processor": "Snapdragon 7+ Gen 3, 2.8GHz",
+    "extras": "Dual stereo speakers, X-axis vibration motor",
+    "buyLink": "https://www.amazon.in/dp/B0D1K73Z4F?tag=vsmobiles1432-21"
+  }
 ]
