@@ -1,26 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Charan's Mobile Site</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VS Mobiles</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <header>
-    <h1>Charan's Mobile Store</h1>
+    <h1>📱 VS Mobile</h1>
+    <input type="text" id="searchBar" placeholder="Search for a mobile..." />
   </header>
 
-  <div class="mobiles">
+  <div id="mobileList" class="card-container">
     <div class="card">
-      <img src="https://via.placeholder.com/250" alt="iQOO Z10">
-      <h2>iQOO Z10</h2>
-      <p>8GB RAM | 5000mAh Battery | Snapdragon 695</p>
-      <p class="price">₹18,999</p>
-      <a href="https://www.amazon.in" target="_blank" class="btn">Buy Now</a>
+      <h3>iQOO Z10</h3>
+      <p>8GB RAM | 7300mAh Battery | Snapdragon 7s gen3</p>
+      <p class="price">₹21,999</p>
+      
+      <button>Buy Now</button>
+    </div>
+
+    <div class="card">
+      <h3>Redmi Note 13</h3>
+      <p>6GB RAM | 5000mAh Battery | MediaTek Dimensity</p>
+      <p class="price">₹16,499</p>
+      <button>Buy Now</button>
+    </div>
+
+    <div class="card">
+      <h3>Samsung Galaxy M14</h3>
+      <p>6GB RAM | 6000mAh Battery | Exynos 1330</p>
+      <p class="price">₹13,990</p>
+      <button>Buy Now</button>
     </div>
   </div>
 
+  <script>
+    const searchBar = document.getElementById("searchBar");
+    const cards = document.querySelectorAll(".card");
+
+    searchBar.addEventListener("input", () => {
+      const query = searchBar.value.toLowerCase();
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(query) ? "block" : "none";
+      });
+    });
+  </script>
 </body>
 </html>
