@@ -1,14 +1,20 @@
-let allPhones = []; // Store all phones globally
+let allPhones = [];
 
 function fetchMobiles(jsonPath) {
   fetch(jsonPath)
     .then(res => res.json())
     .then(data => {
-      // Sort by price (lowest to highest)
-      data.sort((a, b) => a.price - b.price);
       allPhones = data;
       displayPhones(data);
-    });
+    })
+    .catch(err => console.error("Error loading phones:", err));
+}
+
+// ⭐ Convert number to gold stars
+function getStars(rating) {
+  const filled = '★'.repeat(rating);
+  const empty = '☆'.repeat(5 - rating);
+  return `<span style="color:gold">${filled}${empty}</span>`;
 }
 
 function displayPhones(phones) {
@@ -16,29 +22,29 @@ function displayPhones(phones) {
   container.innerHTML = '';
 
   phones.forEach(phone => {
+    const r = phone.ratings || {};  // Fallback if no ratings
+
     const card = document.createElement('div');
     card.className = 'card';
+
     card.innerHTML = `
-      <img src="${phone.image}" alt="${phone.name}" width="200">
-      <h3>${phone.name}</h3>
-      <p><strong>Price:</strong> ₹${phone.price.toLocaleString()}</p>
-      <p><strong>Display:</strong> ${phone.display}</p>
-      <p><strong>Build:</strong> ${phone.build}</p>
-      <p><strong>RAM:</strong> ${phone.ram} | <strong>Storage:</strong> ${phone.storage}</p>
-      <p><strong>Network:</strong> ${phone.network}</p>
-      <p><strong>Camera:</strong> ${phone.camera}</p>
-      <p><strong>Battery:</strong> ${phone.battery}</p>
-      <p><strong>Processor:</strong> ${phone.processor}</p>
-      <p><strong>Extras:</strong> ${phone.extras}</p>
-      <a href="${phone.buyLink}" target="_blank">
-        <button>Buy Now</button>
+      <a href="${phone.page}">
+        <img src="${phone.image}" alt="${phone.name}" class="phone-img">
+        <h3>${phone.name}</h3>
       </a>
+      <p><strong>Price:</strong> ₹${phone.price.toLocaleString()}</p>
+      <p><strong>Display:</strong> ${getStars(r.display || 0)}</p>
+      <p><strong>Build:</strong> ${getStars(r.build || 0)}</p>
+      <p><strong>Camera:</strong> ${getStars(r.camera || 0)}</p>
+      <p><strong>Battery:</strong> ${getStars(r.battery || 0)}</p>
+      <p><strong>Processor:</strong> ${getStars(r.processor || 0)}</p>
     `;
+
     container.appendChild(card);
   });
 }
 
-// 🔍 Search filter
+// 🔍 Search
 document.getElementById('searchBox').addEventListener('input', function () {
   const query = this.value.toLowerCase();
   const filtered = allPhones.filter(phone =>
@@ -47,7 +53,7 @@ document.getElementById('searchBox').addEventListener('input', function () {
   displayPhones(filtered);
 });
 
-// Navigation handler
+// 🌐 Navigation
 function navigateTo(section) {
   if (section === 'home') {
     fetchMobiles('mobiles.json');
@@ -56,7 +62,7 @@ function navigateTo(section) {
   }
 }
 
-// Load home phones on start
+// 🔁 Load home on page load
 document.addEventListener('DOMContentLoaded', () => {
   fetchMobiles('mobiles.json');
 });
