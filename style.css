@@ -108,3 +108,17 @@ button:hover, .buy-btn:hover {
   background-color: #004e92;
   color: white;
 }
+/* In-card image */
+.card img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+/* On mobile spec pages */
+.phone-img {
+  width: 180px;        /* Medium size */
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  border-radius: 12px;
+}
