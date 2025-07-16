@@ -28,6 +28,43 @@
     <div class="navbar">
       <button onclick="navigateTo('home')">Home</button>
       <button onclick="navigateTo('upcoming')">Upcoming Mobiles</button>
+      <button id="categoriesBtn">Categories</button>
+<div id="categoriesSection" style="display: none;">
+  <h2>Choose by Brand</h2>
+  <div class="brand-logos">
+    <div class="brand-item">
+      <img src="images/brands/apple.png" alt="Apple">
+      <p>Apple</p>
+    </div>
+    <div class="brand-item">
+      <img src="images/brands/samsung.png" alt="Samsung">
+      <p>Samsung</p>
+    </div>
+    <div class="brand-item">
+      <img src="images/brands/xiaomi.png" alt="Xiaomi">
+      <p>Xiaomi</p>
+    </div>
+    <div class="brand-item">
+      <img src="images/brands/motorola.png" alt="motorola">
+      <p>Motorola</p>
+    </div>
+    <div class="brand-item">
+      <img src="images/brands/vivo.png" alt="vivo">
+      <p>vivo</p>
+    </div>
+    <div class="brand-item">
+      <img src="images/brands/oppo.png" alt="oppo">
+      <p>oppo</p>
+    </div>
+    <div class="brand-item">
+      <img src="images/brands/poco.png" alt="poco">
+      <p>poco</p>
+    </div>
+    <!-- Add more logos as needed -->
+
+  </div>
+</div>
+
     </div>
 
     <!-- Search -->
@@ -42,5 +79,12 @@
 
   <!-- Scripts -->
   <script src="script.js"></script>
+  <script>
+  document.getElementById("categoriesBtn").addEventListener("click", function () {
+    const section = document.getElementById("categoriesSection");
+    section.style.display = (section.style.display === "none") ? "block" : "none";
+  });
+</script>
+
 </body>
 </html>

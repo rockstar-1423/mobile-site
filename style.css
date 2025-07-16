@@ -162,3 +162,26 @@ button:hover,
   color: gold;
   font-size: 16px;
 }
+.brand-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.brand-item {
+  width: 100px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.brand-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.brand-item:hover {
+  transform: scale(1.1);
+}
