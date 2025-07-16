@@ -1,33 +1,56 @@
-<!-- File: mobiles/iqoo-z10.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>POCO F7 - Specs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Poco F7 - Specs & Price</title>
   <link rel="stylesheet" href="../style.css" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+    .container { max-width: 900px; margin: auto; background: white; padding: 25px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); border-radius: 10px; }
+    .back-link { margin-bottom: 15px; display: inline-block; color: #007bff; text-decoration: none; }
+    .title-section { display: flex; align-items: center; gap: 15px; }
+    .title-section img { width: 40px; height: auto; }
+    .phone-title { font-size: 28px; font-weight: bold; }
+    .phone-section { display: flex; flex-direction: column; align-items: center; margin-top: 25px; }
+    .phone-section img { width: 200px; margin-bottom: 20px; }
+    ul.specs { text-align: left; list-style-type: none; padding: 0; margin-bottom: 30px; }
+    .specs li { margin: 8px 0; font-size: 16px; padding-left: 20px; position: relative; }
+    .specs li::before { content: "•"; position: absolute; left: 0; color: #007bff; }
+    .buy-btn { padding: 12px 25px; background: #ff9900; color: white; border: none; font-size: 16px; text-decoration: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+    .buy-btn:hover { background: #e68a00; }
+    @media (min-width: 768px) {
+      .phone-section { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+      .phone-section img { width: 250px; }
+      .specs { width: 60%; }
+    }
+  </style>
 </head>
 <body>
-  <a href="../index.html">⬅ Back to Home</a>
-  <h2>POCO F7</h2>
-
-  <!-- ✅ Fixed image path -->
-  <img src="../images/poco-f7.png" alt="POCO F7" class="phone-img" />
-
-  <ul>
-    <li><strong>Display:</strong> 6.8-inch 1.5K p-OLED, 2400x1080 pixels</li>
-    <li><strong>Build:</strong> GLASS back(corning gorilla glass 7i) back, middle metal frame, IP67+IP68+IP69 rated</li>
-    <li><strong>RAM:</strong> 12/16GB LPDDR5X</li>
-    <li><strong>Storage:</strong> 256GB/512GB UFS 4.1</li>
-    <li><strong>Network:</strong> Dual 5G, 12 bands supported</li>
-    <li><strong>Camera:</strong> 50MP Sony IMX882sensor</li>
-    <li><strong>Battery:</strong> 7550mAh, 90W fast charging</li>
-    <li><strong>Processor:</strong> Snapdragon 8S Gen 4, 3.25GHz</li>
-    <li><strong>Extras:</strong> Stereo speakers, in-display fingerprint</li>
-    <li><strong>Price:</strong> ₹29,999</li>
-  </ul>
-
-  <a href="https://www.amazon.in/dp/B0F2HBYZ8B?tag=vsmobiles1432-21" target="_blank">
-    <button class="buy-btn">Buy on Amazon</button>
-  </a>
+  <div class="container">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <div class="title-section">
+      <img src="../images/brands/poco.png" alt="Poco Logo">
+      <div class="phone-title">Poco F7</div>
+    </div>
+    <div class="phone-section">
+      <img src="../images/poco-f7.png" alt="Poco F7">
+      <ul class="specs">
+        <li><strong>Display:</strong> 6.7-inch AMOLED, 120Hz refresh rate</li>
+        <li><strong>Build:</strong> Gorilla Glass 5 front and back</li>
+        <li><strong>RAM:</strong> 12GB LPDDR5</li>
+        <li><strong>Storage:</strong> 256GB UFS 3.1</li>
+        <li><strong>Network:</strong> 5G + Dual SIM support</li>
+        <li><strong>Camera:</strong> 64MP main + 13MP ultrawide</li>
+        <li><strong>Battery:</strong> 5100mAh, 67W Turbo Charging</li>
+        <li><strong>Processor:</strong> Snapdragon 8+ Gen 1</li>
+        <li><strong>Extras:</strong> IR Blaster, Dual stereo speakers</li>
+        <li><strong>Price:</strong> ₹29,999</li>
+      </ul>
+    </div>
+    <div style="text-align: center;">
+      <a href="https://www.amazon.in/s?k=poco+f7" class="buy-btn" target="_blank">Buy on Amazon</a>
+    </div>
+  </div>
 </body>
 </html>
