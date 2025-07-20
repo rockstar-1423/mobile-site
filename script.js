@@ -13,23 +13,18 @@ if (isMobilePage) {
   if (mobileName) {
     fetch(`mobiles/${mobileName}.json`)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("File not found");
-        }
+        if (!response.ok) throw new Error("File not found");
         return response.json();
       })
       .then((data) => {
-        // Set title & name
         document.title = `${data.name} - Specs & Price`;
         document.getElementById("page-title").textContent = data.name;
         document.getElementById("mobile-name").textContent = data.name;
 
-        // Set image
         const img = document.getElementById("mobile-img");
         img.src = data.image;
         img.alt = data.name;
 
-        // Icon mapping (Font Awesome classes)
         const iconMap = {
           "Performance": "fas fa-microchip",
           "Display": "fas fa-mobile-alt",
@@ -45,9 +40,8 @@ if (isMobilePage) {
           "Design": "fas fa-paint-brush"
         };
 
-        // Set specifications
         const specsList = document.getElementById("specs-list");
-        specsList.innerHTML = ""; // Clear existing
+        specsList.innerHTML = "";
 
         for (const category in data.specs) {
           const iconClass = iconMap[category] || "fas fa-circle";
@@ -72,23 +66,39 @@ if (isMobilePage) {
 
 // ========== 🏠 Handle index.html ==========
 if (isIndexPage) {
+  const params = new URLSearchParams(window.location.search);
+  const brandName = params.get("brand");
+
   fetch("mobiles.json")
     .then((response) => {
-      if (!response.ok) {
-        throw new Error("mobiles.json not found");
-      }
+      if (!response.ok) throw new Error("mobiles.json not found");
       return response.json();
     })
     .then((mobiles) => {
       const container = document.getElementById("mobiles-container");
       if (!container) return;
 
-      mobiles.forEach((mobile, index) => {
+      let filteredMobiles = mobiles;
+
+      // Filter by brand if present
+      if (brandName) {
+        document.title = `${brandName} Mobiles - VS Mobiles`;
+        filteredMobiles = mobiles.filter(
+          (mobile) => mobile.brand.toLowerCase() === brandName.toLowerCase()
+        );
+      }
+
+      if (filteredMobiles.length === 0) {
+        container.innerHTML = `<p style="text-align:center">No ${brandName} phones found.</p>`;
+        return;
+      }
+
+      filteredMobiles.forEach((mobile, index) => {
         const card = document.createElement("div");
         card.className = "mobile-card";
         card.style.animationDelay = `${index * 0.1}s`;
 
-        const brandLogo = `images/brands/${mobile.brand}.png`;
+        const brandLogo = `images/brands/${mobile.brand.toLowerCase()}.png`;
 
         card.innerHTML = `
           <a href="${mobile.page}">

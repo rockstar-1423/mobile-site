@@ -2,18 +2,21 @@
   {
     "name": "iQOO Z10",
     "price": 21999,
+    "brand":"iqoo",
     "image": "images/iqoo-z10.png",
     "page": "mobile.html?name=iqoo-z10"
   },
   {
     "name": "Realme GT 6T",
     "price": 31999,
+    "brand":"realme",
     "image": "images/realme-gt6t.png",
     "page": "mobile.html?name=realme-gt6t"
   },
   {
     "name": "POCO F7",
     "price": 29999,
+    "brand":"poco",
     "image": "images/poco-f7.png",
     "page": "mobile.html?name=poco-f7"
   }
