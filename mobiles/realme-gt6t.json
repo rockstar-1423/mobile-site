@@ -1,0 +1,88 @@
+{
+  "name": "Realme GT 6T",
+  "price": 30999,
+  "image": "../images/realme-gt6t.png",
+  "specs": {
+    "General": [
+      "Launch Date: May 22, 2024 (Official)",
+      "Operating System: Android v14",
+      "UI: Realme UI 5.0",
+      "OS Updates: 3 Years",
+      "Security Updates: 4 Years"
+    ],
+    "Performance": [
+      "Chipset: Snapdragon 7+ Gen 3 (4nm)",
+      "CPU: Octa-core (1×2.8 GHz + 4×2.6 GHz + 3×1.9 GHz)",
+      "Architecture: 64-bit",
+      "GPU: Adreno 732",
+      "RAM: 8 GB / 12 GB (LPDDR5X)"
+    ],
+    "Display": [
+      "Type: AMOLED, 1.5K",
+      "Size: 6.78 inches (17.22 cm)",
+      "Resolution: 2780x1264 px, 450 ppi",
+      "Brightness: 6000 nits (peak)",
+      "Refresh Rate: 120Hz",
+      "Aspect Ratio: 20:9",
+      "Screen-to-body Ratio: ~94.2%",
+      "Protection: Gorilla Glass Victus 2",
+      "HDR: HDR10+",
+      "Bezel-less: Yes, punch-hole"
+    ],
+    "Design": [
+      "Height: 162 mm",
+      "Width: 75.1 mm",
+      "Thickness: 8.65 mm",
+      "Weight: 191 g",
+      "Back Material: Glass",
+      "Water Resistance: IP65",
+      "Ruggedness: Splashproof"
+    ],
+    "Rear Camera": [
+      "Primary: 50 MP Sony IMX882, f/1.88, OIS",
+      "Secondary: 8 MP Ultra-Wide",
+      "Flash: Dual LED Flash",
+      "Video: 4K @ 30fps",
+      "Features: AI scene, Ultra Steady, HDR, Super Nightscape"
+    ],
+    "Front Camera": [
+      "32 MP Sony sensor",
+      "Video: 1080p @ 30fps"
+    ],
+    "Battery": [
+      "Capacity: 5500 mAh",
+      "Type: Li-ion",
+      "Charging: 120W SUPERVOOC",
+      "Battery Life: ~18 hours"
+    ],
+    "Storage": [
+      "Internal: 128 GB / 256 GB",
+      "Type: UFS 4.0",
+      "Expandable: No"
+    ],
+    "Network & Connectivity": [
+      "SIM: Dual Nano SIM",
+      "5G Support: Yes",
+      "Wi-Fi: Wi-Fi 6",
+      "Bluetooth: v5.4",
+      "GPS: Yes, A-GPS, Glonass",
+      "NFC: Yes"
+    ],
+    "Multimedia": [
+      "Speakers: Stereo",
+      "Audio Jack: USB Type-C",
+      "Audio Features: Dolby Atmos"
+    ],
+    "Sensors": [
+      "Fingerprint Sensor: In-display Optical",
+      "Other Sensors: Accelerometer, Gyro, Light, Compass"
+    ]
+  },
+  "ratings": {
+    "display": 5,
+    "build": 4,
+    "camera": 4,
+    "battery": 5,
+    "processor": 5
+  }
+}

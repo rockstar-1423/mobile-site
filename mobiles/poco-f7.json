@@ -1,0 +1,94 @@
+{
+  "name": "POCO F7",
+  "price": 36999,
+  "image": "../images/poco-f7.png",
+  "specs": {
+    "General": [
+      "Launch Date: July 1, 2025 (Official)",
+      "Operating System: Android v15",
+      "UI: HyperOS",
+      "OS Updates: 4 Years",
+      "Security Updates: 6 Years"
+    ],
+    "Performance": [
+      "Chipset: Snapdragon 8s Gen 4 (4nm)",
+      "CPU: Octa-core (3.21GHz Cortex-X4 + 3.01GHz ×3 Cortex-A720 + 2.8GHz ×2 Cortex-A720 + 2.01GHz ×2)",
+      "Architecture: 64-bit",
+      "GPU: Adreno 825",
+      "RAM: 12 GB (LPDDR5X)"
+    ],
+    "Display": [
+      "Type: AMOLED",
+      "Size: 6.83 inches (17.35 cm)",
+      "Resolution: 1280x2772 (FHD+), 447 ppi",
+      "Brightness: 3200 nits (peak), 1700 nits (HBM)",
+      "Refresh Rate: 120Hz",
+      "Aspect Ratio: 19.5:9",
+      "Screen-to-body Ratio: 89.9% (calculated), 93.7% (claimed)",
+      "Protection: Gorilla Glass 7i",
+      "HDR: HDR10+",
+      "Bezel-less: Punch-hole display"
+    ],
+    "Design": [
+      "Height: 163.1 mm",
+      "Width: 77.93 mm",
+      "Thickness: 7.98 mm",
+      "Weight: 222 g",
+      "Back Material: Gorilla Glass 7i",
+      "Water Resistance: IP68, IP66, IP69",
+      "Ruggedness: Dust proof"
+    ],
+    "Rear Camera": [
+      "Primary: 50 MP, f/1.5, Wide Angle, 26 mm, 1/1.95\", 0.8µm",
+      "Secondary: 8 MP, f/2.2, Ultra-Wide, 15 mm, 1/4.0\", 1.12µm",
+      "OIS: Yes",
+      "Autofocus: Yes",
+      "Flash: LED Flash",
+      "Image Resolution: 8150x6150 pixels",
+      "Video: 4K @ 60fps, 1080p @ 960fps",
+      "Features: HDR, Zoom, Face Detection, Filters, Touch Focus, Voice Shutter, Slow Motion, Bokeh Video, Vlog Mode"
+    ],
+    "Front Camera": [
+      "20 MP, f/2.2, Wide, 1/4.0\"",
+      "Video: 1080p @ 60fps"
+    ],
+    "Battery": [
+      "Capacity: 7550 mAh",
+      "Type: Silicon Carbon",
+      "Charging: 90W Turbo Charging, 50% in 26 mins",
+      "Battery Life: 20h 36m",
+      "Charge Time (20% to 100%): 45 mins"
+    ],
+    "Storage": [
+      "Internal: 256 GB / 512 GB",
+      "Type: UFS 4.1",
+      "Expandable: No"
+    ],
+    "Network & Connectivity": [
+      "SIM: Dual Nano SIM",
+      "5G Support: Yes",
+      "VoLTE: Yes",
+      "Wi-Fi: Wi-Fi 7 (802.11 a/b/g/n/ac/be/ax)",
+      "Bluetooth: v6.0",
+      "GPS: A-GPS, Glonass",
+      "NFC: Yes",
+      "SAR: Head 0.828 W/kg, Body 0.859 W/kg"
+    ],
+    "Multimedia": [
+      "Speakers: Stereo",
+      "Audio Jack: USB Type-C",
+      "Audio Features: Dolby Atmos"
+    ],
+    "Sensors": [
+      "Fingerprint Sensor: On-screen Optical",
+      "Other Sensors: Light, Proximity, Accelerometer, Compass, Gyroscope"
+    ]
+  },
+  "ratings": {
+    "display": 5,
+    "build": 5,
+    "camera": 4,
+    "battery": 5,
+    "processor": 5
+  }
+}
