@@ -1,71 +1,110 @@
-let allPhones = [];
+// ========== 🔍 Detect current page ==========
+const isMobilePage = window.location.pathname.includes("mobile.html");
+const isIndexPage =
+  window.location.pathname.includes("index.html") ||
+  window.location.pathname === "/" ||
+  window.location.pathname === "/index.html";
 
-// Fetch mobiles from given JSON file
-function fetchMobiles(jsonPath) {
-  fetch(jsonPath)
-    .then(res => res.json())
-    .then(data => {
-      allPhones = data;
-      displayPhones(data);
-    })
-    .catch(err => console.error("Error loading phones:", err));
-}
+// ========== 📱 Handle mobile.html ==========
+if (isMobilePage) {
+  const params = new URLSearchParams(window.location.search);
+  const mobileName = params.get("name");
 
-// ⭐ Convert rating number to gold star string
-function getStars(rating) {
-  const safeRating = Math.max(0, Math.min(5, Math.floor(rating || 0)));
-  const filled = '★'.repeat(safeRating);
-  const empty = '☆'.repeat(5 - safeRating);
-  return `<span class="stars">${filled}${empty}</span>`;
-}
+  if (mobileName) {
+    fetch(`mobiles/${mobileName}.json`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("File not found");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Set title & name
+        document.title = `${data.name} - Specs & Price`;
+        document.getElementById("page-title").textContent = data.name;
+        document.getElementById("mobile-name").textContent = data.name;
 
-// Display phones as cards
-function displayPhones(phones) {
-  const container = document.getElementById('mobileList');
-  container.innerHTML = '';
+        // Set image
+        const img = document.getElementById("mobile-img");
+        img.src = data.image;
+        img.alt = data.name;
 
-  phones.forEach(phone => {
-    const r = phone.ratings || {};  // fallback if no ratings provided
+        // Icon mapping (Font Awesome classes)
+        const iconMap = {
+          "Performance": "fas fa-microchip",
+          "Display": "fas fa-mobile-alt",
+          "Rear Camera": "fas fa-camera-retro",
+          "Front Camera": "fas fa-user",
+          "Battery": "fas fa-battery-full",
+          "Storage": "fas fa-hdd",
+          "Operating System": "fab fa-android",
+          "Connectivity": "fas fa-signal",
+          "Multimedia": "fas fa-music",
+          "Sensors": "fas fa-sliders-h",
+          "Build": "fas fa-tools",
+          "Design": "fas fa-paint-brush"
+        };
 
-    const card = document.createElement('div');
-    card.className = 'card';
+        // Set specifications
+        const specsList = document.getElementById("specs-list");
+        specsList.innerHTML = ""; // Clear existing
 
-    card.innerHTML = `
-      <a href="${phone.page}">
-        <img src="${phone.image}" alt="${phone.name}" class="phone-img">
-        <h3>${phone.name}</h3>
-      </a>
-      <p><strong>Price:</strong> ₹${phone.price.toLocaleString()}</p>
-      <p><strong>Display:</strong> ${getStars(r.display)}</p>
-      <p><strong>Build:</strong> ${getStars(r.build)}</p>
-      <p><strong>Camera:</strong> ${getStars(r.camera)}</p>
-      <p><strong>Battery:</strong> ${getStars(r.battery)}</p>
-      <p><strong>Processor:</strong> ${getStars(r.processor)}</p>
-    `;
+        for (const category in data.specs) {
+          const iconClass = iconMap[category] || "fas fa-circle";
+          const dt = document.createElement("dt");
+          dt.innerHTML = `<i class="${iconClass}"></i> ${category}`;
+          specsList.appendChild(dt);
 
-    container.appendChild(card);
-  });
-}
-
-// 🔍 Live Search
-document.getElementById('searchBox').addEventListener('input', function () {
-  const query = this.value.toLowerCase();
-  const filtered = allPhones.filter(phone =>
-    phone.name.toLowerCase().includes(query)
-  );
-  displayPhones(filtered);
-});
-
-// 🔀 Section switch
-function navigateTo(section) {
-  if (section === 'home') {
-    fetchMobiles('mobiles.json');
-  } else if (section === 'upcoming') {
-    fetchMobiles('upcoming.json');
+          data.specs[category].forEach((item) => {
+            const dd = document.createElement("dd");
+            dd.innerHTML = `• ${item}`;
+            specsList.appendChild(dd);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error loading mobile specs:", error);
+        document.querySelector(".container").innerHTML =
+          "<p>Specs not found for this mobile.</p>";
+      });
   }
 }
 
-// 🚀 On page load
-document.addEventListener('DOMContentLoaded', () => {
-  fetchMobiles('mobiles.json');
-});
+// ========== 🏠 Handle index.html ==========
+if (isIndexPage) {
+  fetch("mobiles.json")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("mobiles.json not found");
+      }
+      return response.json();
+    })
+    .then((mobiles) => {
+      const container = document.getElementById("mobiles-container");
+      if (!container) return;
+
+      mobiles.forEach((mobile, index) => {
+        const card = document.createElement("div");
+        card.className = "mobile-card";
+        card.style.animationDelay = `${index * 0.1}s`;
+
+        const brandLogo = `images/brands/${mobile.brand}.png`;
+
+        card.innerHTML = `
+          <a href="${mobile.page}">
+            <img src="${mobile.image}" alt="${mobile.name}" class="home-img" />
+            <div class="brand-name-container">
+              <h3>${mobile.name}</h3>
+              <img src="${brandLogo}" alt="${mobile.brand}" class="brand-logo" />
+            </div>
+            <p><strong>Price:</strong> ₹${mobile.price.toLocaleString()}</p>
+          </a>
+        `;
+
+        container.appendChild(card);
+      });
+    })
+    .catch((error) =>
+      console.error("Error loading mobiles.json:", error)
+    );
+}

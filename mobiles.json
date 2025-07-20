@@ -3,40 +3,18 @@
     "name": "iQOO Z10",
     "price": 21999,
     "image": "images/iqoo-z10.png",
-    "page": "mobiles/iqoo-z10.html",
-    "ratings": {
-      "display": 4,
-      "build": 3,
-      "camera": 3,
-      "battery": 5,
-      "processor": 4
-    }
+    "page": "mobile.html?name=iqoo-z10"
   },
   {
     "name": "Realme GT 6T",
-    "price": 23999,
+    "price": 31999,
     "image": "images/realme-gt6t.png",
-    "page": "mobiles/realme-gt-6t.html",
-    "ratings": {
-      "display": 5,
-      "build": 4,
-      "camera": 4,
-      "battery": 4,
-      "processor": 5
-    }
-  }
-,
+    "page": "mobile.html?name=realme-gt6t"
+  },
   {
-    "name": "POCO-F7",
+    "name": "POCO F7",
     "price": 29999,
     "image": "images/poco-f7.png",
-    "page": "mobiles/poco-f7.html",
-    "ratings":{
-      "display":5,
-      "build":5,
-      "camera":3,
-      "battery":5,
-      "processor":5
-    }
+    "page": "mobile.html?name=poco-f7"
   }
 ]
