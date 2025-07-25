@@ -1,7 +1,11 @@
 {
   "name": "Realme GT 6T",
   "price": 30999,
+<<<<<<< HEAD
   "image": "../images/realme-gt6t.png",
+=======
+  "image": "images/REALME/realme-gt6t/realme-gt6t.png",
+>>>>>>> 2592dee (Uploaded all mobile images)
   "specs": {
     "General": [
       "Launch Date: May 22, 2024 (Official)",

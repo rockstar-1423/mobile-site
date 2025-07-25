@@ -1,7 +1,11 @@
 {
   "name": "POCO F7",
   "price": 36999,
+<<<<<<< HEAD
   "image": "../images/poco-f7.png",
+=======
+  "image": "images/POCO/poco-f7/poco-f7.png",
+>>>>>>> 2592dee (Uploaded all mobile images)
   "specs": {
     "General": [
       "Launch Date: July 1, 2025 (Official)",
