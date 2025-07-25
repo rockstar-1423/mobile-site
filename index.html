@@ -33,7 +33,7 @@
     <div class="navbar">
       <button onclick="navigateTo('home')">Home</button>
       <button onclick="navigateTo('upcoming')">Upcoming Mobiles</button>
-      <button id="categoriesBtn">Categories</button>
+      <button id="BrandBtn">Brands</button>
     </div>
 
     <!-- Categories Section -->
@@ -106,7 +106,7 @@
   <!-- Scripts -->
   <script src="script.js"></script>
   <script>
-    document.getElementById("categoriesBtn").addEventListener("click", function () {
+    document.getElementById("BrandsBtn").addEventListener("click", function () {
       const section = document.getElementById("categoriesSection");
       section.style.display = (section.style.display === "none") ? "block" : "none";
     });
