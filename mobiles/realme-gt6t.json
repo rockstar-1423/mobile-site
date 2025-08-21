@@ -1,18 +1,12 @@
 {
   "name": "Realme GT 6T",
   "price": 30999,
-<<<<<<< HEAD
-  "image": "../images/realme-gt6t.png",
-=======
   "image": "images/REALME/realme-gt6t/realme-gt6t.png",
->>>>>>> 2592dee (Uploaded all mobile images)
   "specs": {
-    "General": [
+    "Software": [
       "Launch Date: May 22, 2024 (Official)",
-      "Operating System: Android v14",
-      "UI: Realme UI 5.0",
-      "OS Updates: 3 Years",
-      "Security Updates: 4 Years"
+      "Operating System: Android v14(realme UI 5.0)",
+      "3 Years of Android updates and 4 years of Security updates"
     ],
     "Performance": [
       "Chipset: Snapdragon 7+ Gen 3 (4nm)",
@@ -38,15 +32,15 @@
       "Width: 75.1 mm",
       "Thickness: 8.65 mm",
       "Weight: 191 g",
-      "Back Material: Glass",
-      "Water Resistance: IP65",
-      "Ruggedness: Splashproof"
+      "Back polycorbonate body",
+      "Water Resistance: IP65(Splashproof not complete water resistence)"
+      
     ],
     "Rear Camera": [
-      "Primary: 50 MP Sony IMX882, f/1.88, OIS",
-      "Secondary: 8 MP Ultra-Wide",
-      "Flash: Dual LED Flash",
-      "Video: 4K @ 30fps",
+      "Primary camera 50 MP Sony IMX882, f/1.88, OIS(optical image stabilization)",
+      "Secondary 8 MP Ultra-Wide angle camera",
+      " Dual LED Flash",
+      "Video: 4K @ 30fps,1080P @60fps/30fps, 720P@60fps/30fps",
       "Features: AI scene, Ultra Steady, HDR, Super Nightscape"
     ],
     "Front Camera": [
@@ -54,10 +48,10 @@
       "Video: 1080p @ 30fps"
     ],
     "Battery": [
-      "Capacity: 5500 mAh",
+      "5500 mAh battery capacity ",
       "Type: Li-ion",
-      "Charging: 120W SUPERVOOC",
-      "Battery Life: ~18 hours"
+      "Charging:- 120W SUPERVOOC",
+      "Battery Life: around 9 hours,"
     ],
     "Storage": [
       "Internal: 128 GB / 256 GB",
@@ -66,9 +60,10 @@
     ],
     "Network & Connectivity": [
       "SIM: Dual Nano SIM",
-      "5G Support: Yes",
-      "Wi-Fi: Wi-Fi 6",
-      "Bluetooth: v5.4",
+      "5G NR",
+      "SA:n77/78/38/40/41(2496-2690MHz)/B66(2110~2180MHz)/N66(2110~2180MHz)/1/3/5/7/8/20/28",
+      " Wi-Fi 6 supproted",
+      "Bluetooth version 5.4",
       "GPS: Yes, A-GPS, Glonass",
       "NFC: Yes"
     ],

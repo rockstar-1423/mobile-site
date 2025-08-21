@@ -33,10 +33,10 @@
     <div class="navbar">
       <button onclick="navigateTo('home')">Home</button>
       <button onclick="navigateTo('upcoming')">Upcoming Mobiles</button>
-      <button id="BrandBtn">Brands</button>
+      <button id="brands-btn">Brands</button>
     </div>
 
-    <!-- Categories Section -->
+    <!-- Brands Section -->
     <div id="categoriesSection" style="display: none;">
       <h2>Choose by Brand</h2>
       <div class="brand-logos">
@@ -46,7 +46,7 @@
         </a>
         <a href="index.html?brand=samsung" class="brand-item">
           <img src="images/brands/samsung.png" alt="Samsung">
-          <p>samsung</p>
+          <p>Samsung</p>
         </a>
         <a href="index.html?brand=xiaomi" class="brand-item">
           <img src="images/brands/xiaomi.png" alt="Xiaomi">
@@ -58,15 +58,15 @@
         </a>
         <a href="index.html?brand=vivo" class="brand-item">
           <img src="images/brands/vivo.png" alt="Vivo">
-          <p>VIVO</p>
+          <p>Vivo</p>
         </a>
         <a href="index.html?brand=iqoo" class="brand-item">
           <img src="images/brands/iqoo.png" alt="IQOO">
           <p>IQOO</p>
         </a>
         <a href="index.html?brand=realme" class="brand-item">
-          <img src="images/brands/realme.png" alt="realme">
-          <p>realme</p>
+          <img src="images/brands/realme.png" alt="Realme">
+          <p>Realme</p>
         </a>
         <a href="index.html?brand=oppo" class="brand-item">
           <img src="images/brands/oppo.png" alt="OPPO">
@@ -78,7 +78,7 @@
         </a>
       </div>
     </div>
-
+<!--text-->
     <!-- Search -->
     <div class="search-bar">
       <input type="text" id="searchBox" placeholder="Search phones..." />
@@ -87,7 +87,6 @@
 
     <!-- ✅ Google AdSense ad unit -->
     <div style="margin: 20px auto; text-align: center;">
-      <!-- homepage-add -->
       <ins class="adsbygoogle"
            style="display:block"
            data-ad-client="ca-pub-1241779357913914"
@@ -106,7 +105,7 @@
   <!-- Scripts -->
   <script src="script.js"></script>
   <script>
-    document.getElementById("BrandsBtn").addEventListener("click", function () {
+    document.getElementById("brands-btn").addEventListener("click", function () {
       const section = document.getElementById("categoriesSection");
       section.style.display = (section.style.display === "none") ? "block" : "none";
     });

@@ -68,6 +68,7 @@ if (isMobilePage) {
 if (isIndexPage) {
   const params = new URLSearchParams(window.location.search);
   const brandName = params.get("brand");
+  const searchTerm = params.get("search");
 
   fetch("mobiles.json")
     .then((response) => {
@@ -80,7 +81,7 @@ if (isIndexPage) {
 
       let filteredMobiles = mobiles;
 
-      // Filter by brand if present
+      // ✅ Filter by brand
       if (brandName) {
         document.title = `${brandName} Mobiles - VS Mobiles`;
         filteredMobiles = mobiles.filter(
@@ -88,11 +89,21 @@ if (isIndexPage) {
         );
       }
 
+      // ✅ Filter by search term
+      if (searchTerm) {
+        document.title = `Search: ${searchTerm} - VS Mobiles`;
+        filteredMobiles = mobiles.filter((mobile) =>
+          mobile.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      }
+
+      // ❌ No results found
       if (filteredMobiles.length === 0) {
-        container.innerHTML = `<p style="text-align:center">No ${brandName} phones found.</p>`;
+        container.innerHTML = `<p style="text-align:center">No matching phones found.</p>`;
         return;
       }
 
+      // ✅ Display results
       filteredMobiles.forEach((mobile, index) => {
         const card = document.createElement("div");
         card.className = "mobile-card";
@@ -118,3 +129,17 @@ if (isIndexPage) {
       console.error("Error loading mobiles.json:", error)
     );
 }
+
+// ========== 🔍 Search bar functionality ==========
+document.getElementById("searchButton").addEventListener("click", function () {
+  const query = document.getElementById("searchBox").value.toLowerCase().trim();
+  if (query) {
+    window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+  }
+});
+
+document.getElementById("searchBox").addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    document.getElementById("searchButton").click();
+  }
+});
