@@ -127,9 +127,9 @@ fetch(sheetURL)
       document.title = `${data.name} - Specs & Price`;
       document.getElementById("page-title").textContent = data.name;
       document.getElementById("mobile-name").textContent = data.name;
-      document.getElementById("mobile-img").src = data.image;
+      document.getElementById("mobile-img").src = data.image || "images/default-mobile.png";
 
-      // ✅ New categories with icons
+      // Icons for your 10 categories
       const iconMap = {
         "Display": "fas fa-mobile-alt",
         "Design and Build Quality": "fas fa-pencil-ruler",
@@ -146,15 +146,15 @@ fetch(sheetURL)
       const specsList = document.getElementById("specs-list");
       specsList.innerHTML = "";
 
-      for (const category in data.specs) {
-        const iconClass = iconMap[category] || "fas fa-circle";
+      for (const category of Object.keys(iconMap)) {
         const dt = document.createElement("dt");
-        dt.innerHTML = `<i class="${iconClass}"></i> ${category}`;
+        dt.innerHTML = `<i class="${iconMap[category]}"></i> ${category}`;
         specsList.appendChild(dt);
 
-        data.specs[category].forEach(item => {
+        const items = data.specs[category] || ["Not Available"];
+        items.forEach(item => {
           const dd = document.createElement("dd");
-          dd.innerHTML = `• ${item}`;
+          dd.textContent = item;
           specsList.appendChild(dd);
         });
       }
