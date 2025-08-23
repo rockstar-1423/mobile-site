@@ -58,27 +58,23 @@ fetch(sheetURL)
 
       let filteredMobiles = mobilesData;
 
-      // Filter by brand
       if (brandName) {
         filteredMobiles = filteredMobiles.filter(
           mobile => mobile.brand.toLowerCase() === brandName.toLowerCase()
         );
       }
 
-      // Filter by search term
       if (searchTerm) {
         filteredMobiles = filteredMobiles.filter(
           mobile => mobile.model.toLowerCase().includes(searchTerm.toLowerCase())
         );
       }
 
-      // Display results
       if (filteredMobiles.length === 0) {
         container.innerHTML = `<p style="text-align:center">No matching phones found.</p>`;
         return;
       }
 
-      // Group by mobile_id to avoid duplicate cards
       const mobilesMap = {};
       filteredMobiles.forEach(mobile => {
         if (!mobilesMap[mobile.mobile_id]) mobilesMap[mobile.mobile_id] = mobile;
@@ -133,20 +129,18 @@ fetch(sheetURL)
       document.getElementById("mobile-name").textContent = data.name;
       document.getElementById("mobile-img").src = data.image;
 
+      // ✅ New categories with icons
       const iconMap = {
-        "Performance": "fas fa-microchip",
         "Display": "fas fa-mobile-alt",
+        "Design and Build Quality": "fas fa-pencil-ruler",
+        "Performance": "fas fa-microchip",
         "Rear Camera": "fas fa-camera-retro",
-        "Front Camera": "fas fa-user",
+        "Front Camera": "fas fa-camera",
+        "OS and Update Policy": "fas fa-cogs",
         "Battery": "fas fa-battery-full",
-        "Storage": "fas fa-hdd",
-        "Operating System": "fab fa-android",
-        "Connectivity": "fas fa-signal",
-        "Multimedia": "fas fa-music",
-        "Sensors": "fas fa-sliders-h",
-        "Build": "fas fa-tools",
-        "Design": "fas fa-paint-brush",
-        "General": "fas fa-list"
+        "Multi Media and Sensors": "fas fa-headphones-alt",
+        "Network Connectivity": "fas fa-signal",
+        "Additional Features": "fas fa-star"
       };
 
       const specsList = document.getElementById("specs-list");
