@@ -52,7 +52,6 @@ fetch(sheetURL)
       const params = new URLSearchParams(window.location.search);
       const brandName = params.get("brand");
       const searchTerm = params.get("search");
-
       const container = document.getElementById("mobiles-container");
       if (!container) return;
 
@@ -80,25 +79,35 @@ fetch(sheetURL)
         if (!mobilesMap[mobile.mobile_id]) mobilesMap[mobile.mobile_id] = mobile;
       });
 
-      Object.values(mobilesMap).forEach((mobile, index) => {
-        const card = document.createElement("div");
-        card.className = "mobile-card";
-        card.style.animationDelay = `${index * 0.1}s`;
+   Object.values(mobilesMap).forEach((mobile, index) => {
+  const card = document.createElement("div");
+  card.className = "mobile-card";
+  card.style.animationDelay = `${index * 0.1}s`;
 
-        const brandLogo = `images/brands/${mobile.brand.toLowerCase()}.png`;
+  const brandLogo = `images/brands/${mobile.brand.toLowerCase()}.png`;
 
-        card.innerHTML = `
-          <a href="mobile.html?name=${encodeURIComponent(mobile.model)}">
-            <img src="${mobile.image_url}" alt="${mobile.model}" class="home-img" />
-            <div class="brand-name-container">
-              <h3>${mobile.model}</h3>
-              <img src="${brandLogo}" alt="${mobile.brand}" class="brand-logo" />
-            </div>
-            <p><strong>Price:</strong> ₹${parseInt(mobile.price).toLocaleString()}</p>
-          </a>
-        `;
-        container.appendChild(card);
-      });
+  // Get specs for summary: only Display and Performance
+  const mobileRows = filteredMobiles.filter(m => m.model === mobile.model);
+  let displaySpec = mobileRows.find(r => r.category === "Display")?.value || "N/A";
+  let performanceSpec = mobileRows.find(r => r.category === "Performance")?.value || "N/A";
+
+  const specSummary = `Display: ${displaySpec} | Processor: ${performanceSpec}`;
+
+  card.innerHTML = `
+    <a href="mobile.html?name=${encodeURIComponent(mobile.model)}">
+      <img src="${mobile.image_url || 'images/default-mobile.png'}" alt="${mobile.model}" class="home-img" />
+      <div class="brand-name-container">
+        <h3>${mobile.model}</h3>
+        <img src="${brandLogo}" alt="${mobile.brand}" class="brand-logo" />
+      </div>
+      <p><strong>Price:</strong> ₹${parseInt(mobile.price).toLocaleString()}</p>
+      <p class="spec-summary">${specSummary}</p>
+    </a>
+  `;
+  container.appendChild(card);
+});
+
+
     }
 
     // ========== 📱 Handle mobile.html ==========
@@ -113,14 +122,20 @@ fetch(sheetURL)
         return;
       }
 
-      const data = { name: mobileModel, specs: {} };
+      // Use the first row for image, price, amazon_link
+      const firstRow = mobileRows[0];
+      const data = {
+        name: mobileModel,
+        specs: {},
+        price: firstRow.price,
+        image: firstRow.image_url,
+        amazon_link: firstRow.amazon_link
+      };
 
+      // Collect all specs by category
       mobileRows.forEach(row => {
         if (!data.specs[row.category]) data.specs[row.category] = [];
         data.specs[row.category].push(row.value);
-        data.price = row.price;
-        data.image = row.image_url;
-        data.amazon_link = row.amazon_link;
       });
 
       // Update HTML
@@ -129,7 +144,6 @@ fetch(sheetURL)
       document.getElementById("mobile-name").textContent = data.name;
       document.getElementById("mobile-img").src = data.image || "images/default-mobile.png";
 
-      // Icons for your 10 categories
       const iconMap = {
         "Display": "fas fa-mobile-alt",
         "Design and Build Quality": "fas fa-pencil-ruler",
@@ -160,7 +174,7 @@ fetch(sheetURL)
       }
 
       // Update Buy button
-      const buyBtn = document.querySelector(".buy-button a");
+      const buyBtn = document.getElementById("buy-link");
       if (buyBtn) buyBtn.href = data.amazon_link || "#";
     }
   })
