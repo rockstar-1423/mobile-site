@@ -153,7 +153,7 @@ fetch(sheetURL)
         "OS and Update Policy": "fas fa-cogs",
         "Battery": "fas fa-battery-full",
         "Multi Media and Sensors": "fas fa-headphones-alt",
-        "Network Connectivity": "fas fa-signal",
+        "Connectivity": "fas fa-signal",
         "Additional Features": "fas fa-star"
       };
 
