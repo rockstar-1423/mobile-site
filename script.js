@@ -145,6 +145,7 @@ fetch(sheetURL)
       document.getElementById("mobile-img").src = data.image || "images/default-mobile.png";
 
       const iconMap = {
+        "Launch Date":"fas fa-rocket",
         "Display": "fas fa-mobile-alt",
         "Design and Build Quality": "fas fa-pencil-ruler",
         "Performance": "fas fa-microchip",
