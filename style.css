@@ -245,6 +245,47 @@ button:hover,
   font-size: 16px;
 }
 
+/* neatly aligned arrow bullets for specs in <p> */
+.specs dd p {
+  margin: 6px 0;
+  font-size: 15px;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 22px;
+}
+
+.specs dd p::before {
+  content: "➤";
+  position: absolute;
+  left: 0;
+  color: #ff9800;
+  font-weight: bold;
+}
+
+/* neatly aligned arrow bullets for specs in <ul><li> */
+.specs dd ul {
+  margin-left: 20px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.specs dd ul li {
+  margin: 6px 0;
+  font-size: 15px;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 22px;
+}
+
+/* ✅ Arrow bullets for specs */
+dl.specs dd::before {
+  content: "➤ ";       /* arrow bullet */
+  color: #ff9800;      /* orange arrow */
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+
 .buy-button {
   text-align: center;
   margin-top: 30px;
@@ -283,18 +324,8 @@ button:hover,
     font-size: 14px;
   }
 }
-.specs dd ul {
-  margin-left: 20px;
-  padding-left: 15px;
-  list-style-type: disc;
-  color: #444;
-  font-size: 16px;
-}
 
-.specs dd ul li {
-  margin-bottom: 6px;
-}
-/* Add at the end of your style.css */
+/* Fade-in Animation for cards */
 .mobile-card {
   opacity: 0;
   transform: translateY(20px);
@@ -307,6 +338,7 @@ button:hover,
     transform: translateY(0);
   }
 }
+
 .brand-name-container {
   display: flex;
   align-items: center;
@@ -319,4 +351,3 @@ button:hover,
   width: auto;
   margin-left: 8px;
 }
-
