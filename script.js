@@ -152,7 +152,8 @@ fetch(sheetURL)
         "Front Camera": "fas fa-camera",
         "OS and Update Policy": "fas fa-cogs",
         "Battery": "fas fa-battery-full",
-        "Multi Media and Sensors": "fas fa-headphones-alt",
+        "Multi Media": "fas fa-headphones-alt",
+        "Sensors": "fas fa-satellite-dish",
         "Connectivity": "fas fa-signal",
         "Additional Features": "fas fa-star"
       };
