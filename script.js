@@ -29,14 +29,13 @@ function CSVToArray(strData, strDelimiter = ",") {
   }
 
   const headers = arrData[0];
-  const dataObjects = arrData.slice(1).map(row => {
+  return arrData.slice(1).map(row => {
     const obj = {};
     headers.forEach((header, i) => {
       obj[header] = row[i];
     });
     return obj;
   });
-  return dataObjects;
 }
 
 // ========== 📱 Fetch mobile data from Google Sheet ==========
@@ -47,7 +46,7 @@ fetch(sheetURL)
   .then(csvText => {
     const mobilesData = CSVToArray(csvText);
 
-    // ========== 🏠 Handle index.html ==========
+    // =================🏠 index.html =================
     if (isIndexPage) {
       const params = new URLSearchParams(window.location.search);
       const brandName = params.get("brand");
@@ -79,50 +78,47 @@ fetch(sheetURL)
         if (!mobilesMap[mobile.mobile_id]) mobilesMap[mobile.mobile_id] = mobile;
       });
 
-   Object.values(mobilesMap).forEach((mobile, index) => {
-  const card = document.createElement("div");
-  card.className = "mobile-card";
-  card.style.animationDelay = `${index * 0.1}s`;
+      Object.values(mobilesMap).forEach((mobile, index) => {
+        const card = document.createElement("div");
+        card.className = "mobile-card";
+        card.style.animationDelay = `${index * 0.1}s`;
 
-  const brandLogo = `images/brands/${mobile.brand.toLowerCase()}.png`;
+        const brandLogo = `images/brands/${mobile.brand.toLowerCase()}.png`;
 
-  // Get specs for summary: only Display and Performance
-  const mobileRows = filteredMobiles.filter(m => m.model === mobile.model);
-  let displaySpec = mobileRows.find(r => r.category === "Display")?.value || "N/A";
-  let performanceSpec = mobileRows.find(r => r.category === "Performance")?.value || "N/A";
+        // Get specs for summary: only Display and Performance
+        const mobileRows = filteredMobiles.filter(m => m.model === mobile.model);
+        let displaySpec = mobileRows.find(r => r.category === "Display")?.value || "N/A";
+        let performanceSpec = mobileRows.find(r => r.category === "Performance")?.value || "N/A";
 
-  const specSummary = `Display: ${displaySpec} | Processor: ${performanceSpec}`;
+        const specSummary = `Display: ${displaySpec} | Processor: ${performanceSpec}`;
 
-  card.innerHTML = `
-    <a href="mobile.html?name=${encodeURIComponent(mobile.model)}">
-      <img src="${mobile.image_url || 'images/default-mobile.png'}" alt="${mobile.model}" class="home-img" />
-      <div class="brand-name-container">
-        <h3>${mobile.model}</h3>
-        <img src="${brandLogo}" alt="${mobile.brand}" class="brand-logo" />
-      </div>
-      <p><strong>Price:</strong> ₹${parseInt(mobile.price).toLocaleString()}</p>
-      <p class="spec-summary">${specSummary}</p>
-    </a>
-  `;
-  container.appendChild(card);
-});
-
-
+        card.innerHTML = `
+          <a href="mobile.html?name=${encodeURIComponent(mobile.model)}">
+            <img src="${mobile.image_url || 'images/default-mobile.png'}" alt="${mobile.model}" class="home-img" />
+            <div class="brand-name-container">
+              <h3>${mobile.model}</h3>
+              <img src="${brandLogo}" alt="${mobile.brand}" class="brand-logo" />
+            </div>
+            <p><strong>Price:</strong> ₹${parseInt(mobile.price).toLocaleString()}</p>
+            <p class="spec-summary">${specSummary}</p>
+          </a>
+        `;
+        container.appendChild(card);
+      });
     }
 
-    // ========== 📱 Handle mobile.html ==========
+    // =================📱 mobile.html =================
     if (isMobilePage) {
       const params = new URLSearchParams(window.location.search);
       const mobileModel = params.get("name");
       if (!mobileModel) return;
 
       const mobileRows = mobilesData.filter(m => m.model === mobileModel);
-      if (mobileRows.length === 0) {
+      if (!mobileRows.length) {
         document.querySelector(".container").innerHTML = "<p>Specs not found for this mobile.</p>";
         return;
       }
 
-      // Use the first row for image, price, amazon_link
       const firstRow = mobileRows[0];
       const data = {
         name: mobileModel,
@@ -134,8 +130,10 @@ fetch(sheetURL)
 
       // Collect all specs by category
       mobileRows.forEach(row => {
-        if (!data.specs[row.category]) data.specs[row.category] = [];
-        data.specs[row.category].push(row.value);
+        if (!data.specs[row.category]) {
+          data.specs[row.category] = { values: [], rating: row.rating || "" };
+        }
+        data.specs[row.category].values.push(row.value);
       });
 
       // Update HTML
@@ -165,9 +163,24 @@ fetch(sheetURL)
       for (const category of Object.keys(iconMap)) {
         const dt = document.createElement("dt");
         dt.innerHTML = `<i class="${iconMap[category]}"></i> ${category}`;
+
+        // ✅ Append rating badge if available
+        let rating = data.specs[category]?.rating;
+        if (rating) {
+          const knownRatings = ["below-average","average","good","super","excellent","flagship"];
+          const ratingClass = knownRatings.includes(rating.toLowerCase().replace(/\s+/g,"-")) 
+            ? `rating-${rating.toLowerCase().replace(/\s+/g,"-")}` 
+            : "rating-average"; // default if unknown
+
+          const span = document.createElement("span");
+          span.textContent = ` (${rating})`; // original rating text
+          span.className = `rating-badge ${ratingClass}`;
+          dt.appendChild(span);
+        }
+
         specsList.appendChild(dt);
 
-        const items = data.specs[category] || ["Not Available"];
+        const items = data.specs[category]?.values || ["Not Available"];
         items.forEach(item => {
           const dd = document.createElement("dd");
           dd.textContent = item;

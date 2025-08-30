@@ -351,3 +351,19 @@ dl.specs dd::before {
   width: auto;
   margin-left: 8px;
 }
+.rating-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 8px;
+  color: white;
+}
+
+.rating-below-average { background-color: #ff6666; } /* light red */
+.rating-average { background-color: #ff9800; }       /* orange */
+.rating-good { background-color: #90ee90; color:#000;} /* light green */
+.rating-super { background-color: #4caf50; }        /* green */
+.rating-excellent { background-color: #006400; }    /* dark green */
+.rating-flagship { background-color: #0033cc; }     /* dark blue */
