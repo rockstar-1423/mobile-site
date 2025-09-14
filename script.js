@@ -1,196 +1,181 @@
-// ========== 🔍 Detect current page ==========
+// ====================== 🔹 Firebase Setup ======================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getFirestore, collection, getDocs, query } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCMHCVkW-3maym87_MEWRMAJpbBpYpcCxE",
+  authDomain: "vsmobiles-43528.firebaseapp.com",
+  projectId: "vsmobiles-43528",
+  storageBucket: "vsmobiles-43528.appspot.com",
+  messagingSenderId: "1026685480980",
+  appId: "1:1026685480980:web:ce02a6b5e1779e50387701",
+  measurementId: "G-EGMM3NS67G"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ====================== 🔍 Page Detection ======================
 const isMobilePage = window.location.pathname.includes("mobile.html");
 const isIndexPage =
   window.location.pathname.includes("index.html") ||
   window.location.pathname === "/" ||
   window.location.pathname === "/index.html";
 
-// ========== 📄 CSV to JSON Parser ==========
-function CSVToArray(strData, strDelimiter = ",") {
-  const objPattern = new RegExp(
-    `(${strDelimiter}|\\r?\\n|\\r|^)(?:"([^"]*(?:""[^"]*)*)"|([^"${strDelimiter}\\r\\n]*))`,
-    "gi"
-  );
-  const arrData = [[]];
-  let arrMatches = null;
+// ====================== 🏠 Index Page ======================
+async function loadHomePage() {
+  const params = new URLSearchParams(window.location.search);
+  const brandName = params.get("brand");
+  const searchTerm = params.get("search");
 
-  while ((arrMatches = objPattern.exec(strData))) {
-    const strMatchedDelimiter = arrMatches[1];
-    if (strMatchedDelimiter.length && strMatchedDelimiter !== strDelimiter) {
-      arrData.push([]);
-    }
-    let strMatchedValue;
-    if (arrMatches[2]) {
-      strMatchedValue = arrMatches[2].replace(/""/g, '"');
-    } else {
-      strMatchedValue = arrMatches[3];
-    }
-    arrData[arrData.length - 1].push(strMatchedValue);
+  const mobilesCol = collection(db, "mobiles");
+  const snapshot = await getDocs(mobilesCol);
+  let mobiles = snapshot.docs.map(doc => doc.data());
+
+  if (brandName) {
+    mobiles = mobiles.filter(m => m.brand.toLowerCase() === brandName.toLowerCase());
   }
 
-  const headers = arrData[0];
-  return arrData.slice(1).map(row => {
-    const obj = {};
-    headers.forEach((header, i) => {
-      obj[header] = row[i];
-    });
-    return obj;
+  if (searchTerm) {
+    mobiles = mobiles.filter(m => m.model.toLowerCase().includes(searchTerm.toLowerCase()));
+  }
+
+  const container = document.getElementById("mobiles-container");
+  if (!container) return;
+
+  if (mobiles.length === 0) {
+    container.innerHTML = `<p style="text-align:center">No matching phones found.</p>`;
+    return;
+  }
+
+  container.innerHTML = "";
+  mobiles.forEach((mobile, index) => {
+    const card = document.createElement("div");
+    card.className = "mobile-card";
+    card.style.animationDelay = `${index * 0.1}s`;
+
+    const brandLogo = `images/brands/${mobile.brand.toLowerCase()}.png`;
+
+    // ✅ Only take Display + Processor
+    const displaySpec = mobile.specs?.Display?.[0] || "N/A";
+    const performanceSpec = mobile.specs?.Performance?.[0] || "N/A";
+    const specSummary = `Display: ${displaySpec} | Processor: ${performanceSpec}`;
+
+    // ✅ Multiple images (carousel)
+    const images = mobile.images || [mobile.image || "images/default-mobile.png"];
+    const cardId = `gallery-${index}`;
+
+    card.innerHTML = `
+      <a href="mobile.html?name=${encodeURIComponent(mobile.model)}">
+        <div class="card-gallery">
+          <img src="${images[0]}" alt="${mobile.model}" id="${cardId}-img" />
+          ${images.length > 1 ? `
+            <div class="card-gallery-controls">
+              <button id="${cardId}-prev">◀</button>
+              <button id="${cardId}-next">▶</button>
+            </div>
+          ` : ""}
+        </div>
+        <div class="brand-name-container">
+          <h3>${mobile.model}</h3>
+          <img src="${brandLogo}" alt="${mobile.brand}" class="brand-logo" />
+        </div>
+        <p><strong>Price:</strong> ₹${parseInt(mobile.price).toLocaleString()}</p>
+        <p class="spec-summary">${specSummary}</p>
+      </a>
+    `;
+
+    container.appendChild(card);
+
+    // ✅ Add gallery controls if multiple images
+    if (images.length > 1) {
+      let currentIndex = 0;
+      const imgEl = document.getElementById(`${cardId}-img`);
+
+      document.getElementById(`${cardId}-prev`).addEventListener("click", (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        imgEl.src = images[currentIndex];
+      });
+
+      document.getElementById(`${cardId}-next`).addEventListener("click", (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % images.length;
+        imgEl.src = images[currentIndex];
+      });
+    }
   });
 }
 
-// ========== 📱 Fetch mobile data from Google Sheet ==========
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8-tuYENgbEqhB6GgxEu9PtPXSZBPIZNXlxLgYZyzuzH97qPNa8AznKG56HxP_tKA-7WiYm1cFxsTp/pub?output=csv";
+// ====================== 📱 Mobile Page ======================
+async function loadMobilePage() {
+  const params = new URLSearchParams(window.location.search);
+  const mobileModel = params.get("name");
+  if (!mobileModel) return;
 
-fetch(sheetURL)
-  .then(response => response.text())
-  .then(csvText => {
-    const mobilesData = CSVToArray(csvText);
+  const mobilesCol = collection(db, "mobiles");
+  const snapshot = await getDocs(mobilesCol);
+  const mobileData = snapshot.docs.map(doc => doc.data()).find(m => m.model === mobileModel);
 
-    // =================🏠 index.html =================
-    if (isIndexPage) {
-      const params = new URLSearchParams(window.location.search);
-      const brandName = params.get("brand");
-      const searchTerm = params.get("search");
-      const container = document.getElementById("mobiles-container");
-      if (!container) return;
+  if (!mobileData) {
+    document.querySelector(".container").innerHTML = "<p>Specs not found for this mobile.</p>";
+    return;
+  }
 
-      let filteredMobiles = mobilesData;
+  // Update basic info
+  document.title = `${mobileData.model} - Specs & Price`;
+  document.getElementById("page-title").textContent = mobileData.model;
+  document.getElementById("mobile-name").textContent = mobileData.model;
+  document.getElementById("buy-link").href = mobileData.amazon_link || "#";
 
-      if (brandName) {
-        filteredMobiles = filteredMobiles.filter(
-          mobile => mobile.brand.toLowerCase() === brandName.toLowerCase()
-        );
-      }
+  // ===== Gallery Setup =====
+  const images = mobileData.images || ["images/default-mobile.png"];
+  let currentIndex = 0;
+  const mainImg = document.getElementById("mobile-img");
+  mainImg.src = images[currentIndex];
 
-      if (searchTerm) {
-        filteredMobiles = filteredMobiles.filter(
-          mobile => mobile.model.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }
+  document.getElementById("prev-img").addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    mainImg.src = images[currentIndex];
+  });
 
-      if (filteredMobiles.length === 0) {
-        container.innerHTML = `<p style="text-align:center">No matching phones found.</p>`;
-        return;
-      }
+  document.getElementById("next-img").addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    mainImg.src = images[currentIndex];
+  });
 
-      const mobilesMap = {};
-      filteredMobiles.forEach(mobile => {
-        if (!mobilesMap[mobile.mobile_id]) mobilesMap[mobile.mobile_id] = mobile;
-      });
+  // ===== Specs =====
+  const iconMap = {
+    "Display": "fas fa-mobile-alt",
+    "Design and Build Quality": "fas fa-pencil-ruler",
+    "Performance": "fas fa-microchip",
+    "Rear Camera": "fas fa-camera-retro",
+    "Front Camera": "fas fa-camera",
+    "OS and Update Policy": "fas fa-cogs",
+    "Battery": "fas fa-battery-full",
+    "Multi Media and Sensors": "fas fa-headphones-alt",
+    "Network Connectivity": "fas fa-signal",
+    "Additional Features": "fas fa-star"
+  };
 
-      Object.values(mobilesMap).forEach((mobile, index) => {
-        const card = document.createElement("div");
-        card.className = "mobile-card";
-        card.style.animationDelay = `${index * 0.1}s`;
+  const specsList = document.getElementById("specs-list");
+  specsList.innerHTML = "";
 
-        const brandLogo = `images/brands/${mobile.brand.toLowerCase()}.png`;
+  for (const category in iconMap) {
+    const dt = document.createElement("dt");
+    dt.innerHTML = `<i class="${iconMap[category]}"></i> ${category}`;
+    specsList.appendChild(dt);
 
-        // Get specs for summary: only Display and Performance
-        const mobileRows = filteredMobiles.filter(m => m.model === mobile.model);
-        let displaySpec = mobileRows.find(r => r.category === "Display")?.value || "N/A";
-        let performanceSpec = mobileRows.find(r => r.category === "Performance")?.value || "N/A";
+    const items = mobileData.specs[category] || ["Not Available"];
+    items.forEach(item => {
+      const dd = document.createElement("dd");
+      dd.textContent = item;
+      specsList.appendChild(dd);
+    });
+  }
+}
 
-        const specSummary = `Display: ${displaySpec} | Processor: ${performanceSpec}`;
 
-        card.innerHTML = `
-          <a href="mobile.html?name=${encodeURIComponent(mobile.model)}">
-            <img src="${mobile.image_url || 'images/default-mobile.png'}" alt="${mobile.model}" class="home-img" />
-            <div class="brand-name-container">
-              <h3>${mobile.model}</h3>
-              <img src="${brandLogo}" alt="${mobile.brand}" class="brand-logo" />
-            </div>
-            <p><strong>Price:</strong> ₹${parseInt(mobile.price).toLocaleString()}</p>
-            <p class="spec-summary">${specSummary}</p>
-          </a>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    // =================📱 mobile.html =================
-    if (isMobilePage) {
-      const params = new URLSearchParams(window.location.search);
-      const mobileModel = params.get("name");
-      if (!mobileModel) return;
-
-      const mobileRows = mobilesData.filter(m => m.model === mobileModel);
-      if (!mobileRows.length) {
-        document.querySelector(".container").innerHTML = "<p>Specs not found for this mobile.</p>";
-        return;
-      }
-
-      const firstRow = mobileRows[0];
-      const data = {
-        name: mobileModel,
-        specs: {},
-        price: firstRow.price,
-        image: firstRow.image_url,
-        amazon_link: firstRow.amazon_link
-      };
-
-      // Collect all specs by category
-      mobileRows.forEach(row => {
-        if (!data.specs[row.category]) {
-          data.specs[row.category] = { values: [], rating: row.rating || "" };
-        }
-        data.specs[row.category].values.push(row.value);
-      });
-
-      // Update HTML
-      document.title = `${data.name} - Specs & Price`;
-      document.getElementById("page-title").textContent = data.name;
-      document.getElementById("mobile-name").textContent = data.name;
-      document.getElementById("mobile-img").src = data.image || "images/default-mobile.png";
-
-      const iconMap = {
-        "Launch Date":"fas fa-rocket",
-        "Display": "fas fa-mobile-alt",
-        "Design and Build Quality": "fas fa-pencil-ruler",
-        "Performance": "fas fa-microchip",
-        "Rear Camera": "fas fa-camera-retro",
-        "Front Camera": "fas fa-camera",
-        "OS and Update Policy": "fas fa-cogs",
-        "Battery": "fas fa-battery-full",
-        "Multi Media": "fas fa-headphones-alt",
-        "Sensors": "fas fa-satellite-dish",
-        "Connectivity": "fas fa-signal",
-        "Additional Features": "fas fa-star"
-      };
-
-      const specsList = document.getElementById("specs-list");
-      specsList.innerHTML = "";
-
-      for (const category of Object.keys(iconMap)) {
-        const dt = document.createElement("dt");
-        dt.innerHTML = `<i class="${iconMap[category]}"></i> ${category}`;
-
-        // ✅ Append rating badge if available
-        let rating = data.specs[category]?.rating;
-        if (rating) {
-          const knownRatings = ["below-average","average","good","super","excellent","flagship"];
-          const ratingClass = knownRatings.includes(rating.toLowerCase().replace(/\s+/g,"-")) 
-            ? `rating-${rating.toLowerCase().replace(/\s+/g,"-")}` 
-            : "rating-average"; // default if unknown
-
-          const span = document.createElement("span");
-          span.textContent = ` (${rating})`; // original rating text
-          span.className = `rating-badge ${ratingClass}`;
-          dt.appendChild(span);
-        }
-
-        specsList.appendChild(dt);
-
-        const items = data.specs[category]?.values || ["Not Available"];
-        items.forEach(item => {
-          const dd = document.createElement("dd");
-          dd.textContent = item;
-          specsList.appendChild(dd);
-        });
-      }
-
-      // Update Buy button
-      const buyBtn = document.getElementById("buy-link");
-      if (buyBtn) buyBtn.href = data.amazon_link || "#";
-    }
-  })
-  .catch(error => console.error("Error loading Google Sheet:", error));
+// ====================== 🔹 Initialize ======================
+if (isIndexPage) loadIndexPage();
+if (isMobilePage) loadMobilePage();

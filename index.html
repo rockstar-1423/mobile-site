@@ -8,94 +8,87 @@
   <meta name="author" content="Charan">
   <title>VS Mobiles</title>
   <link rel="stylesheet" href="style.css" />
+  <script type="module" src="script.js">
+    // ✅ Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DETVL45MPF"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-DETVL45MPF');
+    const firebaseConfig = {
+      apiKey: "AIzaSyCMHCVkW-3maym87_MEWRMAJpbBpYpcCxE",
+      authDomain: "vsmobiles-43528.firebaseapp.com",
+      projectId: "vsmobiles-43528",
+      storageBucket: "vsmobiles-43528.appspot.com",
+      messagingSenderId: "1026685480980",
+      appId: "1:1026685480980:web:ce02a6b5e1779e50387701",
+      measurementId: "G-EGMM3NS67G"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const container = document.getElementById("mobiles-container");
+      if (!container) return;
+
+      // Get URL params
+      const params = new URLSearchParams(window.location.search);
+      const brandName = params.get("brand")?.toLowerCase() || "";
+
+      // Fetch mobiles collection
+      const mobilesCol = collection(db, "mobiles");
+      const mobileSnapshot = await getDocs(mobilesCol);
+
+      let mobilesData = mobileSnapshot.docs.map(doc => doc.data());
+
+      if (brandName) {
+        mobilesData = mobilesData.filter(m => m.brand.toLowerCase() === brandName);
+      }
+
+      if (mobilesData.length === 0) {
+        container.innerHTML = `<p style="text-align:center">No matching phones found.</p>`;
+        return;
+      }
+
+      mobilesData.forEach((mobile, index) => {
+        const card = document.createElement("div");
+        card.className = "mobile-card";
+        card.style.animationDelay = `${index * 0.1}s`;
+
+        const brandLogo = `images/brands/${mobile.brand.toLowerCase()}.png`;
+
+        // Show only Display & Processor for summary
+        const display = mobile.specs["Display"]?.[0] || "N/A";
+        const processor = mobile.specs["Performance"]?.[0] || "N/A";
+        const specSummary = `Display: ${display} | Processor: ${processor}`;
+
+        card.innerHTML = `
+          <a href="mobile.html?name=${encodeURIComponent(mobile.model)}">
+            <img src="${mobile.image || 'images/default-mobile.png'}" alt="${mobile.model}" class="home-img" />
+            <div class="brand-name-container">
+              <h3>${mobile.model}</h3>
+              <img src="${brandLogo}" alt="${mobile.brand}" class="brand-logo" />
+            </div>
+            <p><strong>Price:</strong> ₹${parseInt(mobile.price).toLocaleString()}</p>
+            <p class="spec-summary">${specSummary}</p>
+          </a>
+        `;
+        container.appendChild(card);
+      });
+    });
   </script>
 </head>
 <body>
   <!-- Header -->
   <header>
-    <!-- Logo -->
     <div class="logo-container">
       <img src="images/mobilesite-logo.jpg" alt="VS Mobiles Logo" class="logo">
     </div>
-
-    <!-- Site Name -->
     <h1 class="site-title">VS Mobiles</h1>
-
-    <!-- Navigation -->
     <div class="navbar">
-      <button onclick="navigateTo('home')">Home</button>
-      <button onclick="navigateTo('upcoming')">Upcoming Mobiles</button>
-      <button id="brands-btn">Brands</button>
+      <button onclick="window.location.href='index.html'">Home</button>
     </div>
   </header>
 
-  <!-- Brands Section -->
-  <div id="categoriesSection" style="display: none;">
-    <h2>Choose by Brand</h2>
-    <div class="brand-logos">
-      <a href="index.html?brand=apple" class="brand-item">
-        <img src="images/brands/apple.png" alt="Apple">
-        <p>Apple</p>
-      </a>
-      <a href="index.html?brand=samsung" class="brand-item">
-        <img src="images/brands/samsung.png" alt="Samsung">
-        <p>Samsung</p>
-      </a>
-      <a href="index.html?brand=xiaomi" class="brand-item">
-        <img src="images/brands/xiaomi.png" alt="Xiaomi">
-        <p>Xiaomi</p>
-      </a>
-      <a href="index.html?brand=motorola" class="brand-item">
-        <img src="images/brands/motorola.png" alt="Motorola">
-        <p>Motorola</p>
-      </a>
-      <a href="index.html?brand=vivo" class="brand-item">
-        <img src="images/brands/vivo.png" alt="Vivo">
-        <p>Vivo</p>
-      </a>
-      <a href="index.html?brand=iqoo" class="brand-item">
-        <img src="images/brands/iqoo.png" alt="IQOO">
-        <p>IQOO</p>
-      </a>
-      <a href="index.html?brand=realme" class="brand-item">
-        <img src="images/brands/realme.png" alt="Realme">
-        <p>Realme</p>
-      </a>
-      <a href="index.html?brand=oppo" class="brand-item">
-        <img src="images/brands/oppo.png" alt="OPPO">
-        <p>OPPO</p>
-      </a>
-      <a href="index.html?brand=poco" class="brand-item">
-        <img src="images/brands/poco.png" alt="POCO">
-        <p>POCO</p>
-      </a>
-    </div>
-  </div>
-
-  <!-- Search -->
-  <div class="search-bar">
-    <input type="text" id="searchBox" placeholder="Search phones..." />
-    <button id="searchButton">🔍</button>
-  </div>
-
-  <!-- Mobile Cards Will Load Here -->
   <div id="mobiles-container" class="card-container"></div>
-
-  <!-- Scripts -->
-  <script src="script.js"></script>
-  <script>
-    document.getElementById("brands-btn").addEventListener("click", function () {
-      const section = document.getElementById("categoriesSection");
-      section.style.display = (section.style.display === "none") ? "block" : "none";
-    });
-  </script>
 </body>
 </html>

@@ -367,3 +367,60 @@ dl.specs dd::before {
 .rating-super { background-color: #4caf50; }        /* green */
 .rating-excellent { background-color: #006400; }    /* dark green */
 .rating-flagship { background-color: #0033cc; }     /* dark blue */
+.mobile-gallery {
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto 20px auto;
+}
+
+#gallery-controls {
+  position: absolute;
+  top: 45%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+#gallery-controls button {
+  pointer-events: all;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 24px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* ===== Mobile Card Gallery ===== */
+.card-gallery {
+  position: relative;
+  max-width: 100%;
+}
+
+.card-gallery img {
+  width: 100%;
+  border-radius: 8px;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+.card-gallery-controls {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.card-gallery-controls button {
+  pointer-events: all;
+  background-color: rgba(0,0,0,0.4);
+  color: white;
+  border: none;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
