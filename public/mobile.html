@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title id="page-title">Mobile Details</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <a href="index.html">← Back to Home</a>
+
+  <div class="container">
+    <div class="mobile-gallery">
+  <img id="mobile-img" src="images/default-mobile.png" alt="Mobile Image" class="mobile-image" />
+  <div id="gallery-controls">
+    <button id="prev-img">◀</button>
+    <button id="next-img">▶</button>
+  </div>
+</div>
+
+    <div class="title" id="mobile-name">Loading...</div>
+    <dl class="specs" id="specs-list"></dl>
+    <div class="buy-button">
+      <a href="#" id="buy-link">Buy on Amazon</a>
+    </div>
+    <div id="disqus_thread"></div>
+  </div>
+
+  <script type="module" src="script.js">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCMHCVkW-3maym87_MEWRMAJpbBpYpcCxE",
+      authDomain: "vsmobiles-43528.firebaseapp.com",
+      projectId: "vsmobiles-43528",
+      storageBucket: "vsmobiles-43528.appspot.com",
+      messagingSenderId: "1026685480980",
+      appId: "1:1026685480980:web:ce02a6b5e1779e50387701",
+      measurementId: "G-EGMM3NS67G"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const params = new URLSearchParams(window.location.search);
+    const mobileModel = params.get("name");
+
+    if (!mobileModel) document.getElementById("mobile-name").textContent = "Mobile Not Found";
+
+    const mobilesCol = collection(db, "mobiles");
+    const q = query(mobilesCol);
+    const snapshot = await getDocs(q);
+
+    const mobileData = snapshot.docs.map(doc => doc.data()).find(m => m.model === mobileModel);
+
+    if (!mobileData) {
+      document.querySelector(".container").innerHTML = "<p>Specs not found for this mobile.</p>";
+    } else {
+      document.title = `${mobileData.model} - Specs & Price`;
+      document.getElementById("page-title").textContent = mobileData.model;
+      document.getElementById("mobile-name").textContent = mobileData.model;
+      document.getElementById("mobile-img").src = mobileData.image || "images/default-mobile.png";
+      document.getElementById("buy-link").href = mobileData.amazon_link || "#";
+
+      const specsList = document.getElementById("specs-list");
+      const iconMap = {
+        "Display": "fas fa-mobile-alt",
+        "Design and Build Quality": "fas fa-pencil-ruler",
+        "Performance": "fas fa-microchip",
+        "Rear Camera": "fas fa-camera-retro",
+        "Front Camera": "fas fa-camera",
+        "OS and Update Policy": "fas fa-cogs",
+        "Battery": "fas fa-battery-full",
+        "Multi Media and Sensors": "fas fa-headphones-alt",
+        "Network Connectivity": "fas fa-signal",
+        "Additional Features": "fas fa-star"
+      };
+
+      specsList.innerHTML = "";
+      for (const category in iconMap) {
+        const dt = document.createElement("dt");
+        dt.innerHTML = `<i class="${iconMap[category]}"></i> ${category}`;
+        specsList.appendChild(dt);
+
+        const items = mobileData.specs[category] || ["Not Available"];
+        items.forEach(item => {
+          const dd = document.createElement("dd");
+          dd.textContent = item;
+          specsList.appendChild(dd);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
